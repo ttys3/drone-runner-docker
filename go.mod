@@ -3,7 +3,7 @@ module github.com/drone-runners/drone-runner-docker
 go 1.12
 
 //replace github.com/docker/docker => github.com/docker/engine v17.12.0-ce-rc1.0.20200309214505-aa6a9891b09c+incompatible
-replace github.com/docker/docker => github.com/ttys3/engine v1.17.12-ce-rc1-fix-podman-drone
+replace github.com/docker/docker => github.com/ttys3/engine v1.17.12-ce-rc1-fix2-podman-drone
 
 //replace github.com/drone/runner-go => /home/ttys3/repo/go/runner-go
 
