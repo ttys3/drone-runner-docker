@@ -46,7 +46,7 @@ func New(client client.APIClient, opts Opts) *Docker {
 
 // NewEnv returns a new Engine from the environment.
 func NewEnv(opts Opts) (*Docker, error) {
-	cli, err := client.NewClientWithOpts(client.FromEnv)
+	cli, err := client.NewEnvClient()
 	if err != nil {
 		return nil, err
 	}
@@ -72,7 +72,7 @@ func (e *Docker) Setup(ctx context.Context, specv runtime.Spec) error {
 		if vol.EmptyDir == nil {
 			continue
 		}
-		_, err := e.client.VolumeCreate(ctx, volume.VolumeCreateBody{
+		_, err := e.client.VolumeCreate(ctx, volume.VolumesCreateBody{
 			Name:   vol.EmptyDir.ID,
 			Driver: "local",
 			Labels: vol.EmptyDir.Labels,
