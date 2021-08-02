@@ -53,6 +53,9 @@ func NewEnv(opts Opts) (*Docker, error) {
 	return New(cli, opts), nil
 }
 
+// https://github.com/hashicorp/nomad-driver-podman/blob/main/api/api.go
+// https://docs.podman.io/en/latest/_static/api.html
+
 // Ping pings the Docker daemon.
 func (e *Docker) Ping(ctx context.Context) error {
 	_, err := e.client.Ping(ctx)
