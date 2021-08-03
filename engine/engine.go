@@ -341,9 +341,20 @@ func (e *Docker) tail(ctx context.Context, id string, output io.Writer) error {
 		return err
 	}
 
+	// tricks to fixup read data been truncated bug (only with podman api, docker api seems not have the same problem)
+	// this works, but not a good solution
+	// logsTxt, _ := ioutil.ReadAll(logs)
+	// logs = ioutil.NopCloser(bytes.NewBuffer(logsTxt)) // Reset
+
+	// so we use a read done event channel here to ensure all data been read
+	readDone := make(chan struct{})
 	go func() {
 		stdcopy.StdCopy(output, output, logs)
 		logs.Close()
+		readDone <- struct{}{}
 	}()
+
+	// wait for read all data
+	<-readDone
 	return nil
 }
